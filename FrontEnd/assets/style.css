@@ -187,7 +187,7 @@ footer nav ul {
 	margin: 2em
 }
 
-.filters {
+#filters {
 	display: flex;
 	width: 100%;
 	justify-content: center;
@@ -202,6 +202,8 @@ button {
 	border : 1px solid #1D6154;
 	border-radius: 25px;
 	padding : 10px 20px 10px 20px;
+	cursor: pointer;
+	white-space: nowrap;
 }
 
 button:focus {
