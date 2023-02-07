@@ -5,10 +5,13 @@ const btnAll = document.querySelector("#btn-all");
 // fonction pour appeller l'API des projets
 async function getDataWorks() {
   const r = await fetch("http://localhost:5678/api/works");
-  if (r.ok === true) {
-    return r.json();
+  try {
+    if (r.ok === true) {
+      return r.json();
+    }
+  } catch (error) {
+    console.log("erreur");
   }
-  throw new Error("Impossible de contacter le serveur");
 }
 
 // fonction pour créer tous les projets
@@ -44,8 +47,12 @@ createWorks();
 // fonction pour appeller l'API des catégories
 async function getCategories() {
   const r = await fetch("http://localhost:5678/api/categories");
-  if (r.ok === true) {
-    return r.json();
+  try {
+    if (r.ok === true) {
+      return r.json();
+    }
+  } catch (error) {
+    console.log("erreur");
   }
 }
 

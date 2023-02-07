@@ -11,9 +11,15 @@
 		rel="stylesheet">
 	<meta name="description" content="">
 	<link rel="stylesheet" href="./assets/style.css">
+	<script src="https://kit.fontawesome.com/41f642a776.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
+	<div id="edit-top">
+		<i class="fa-regular fa-pen-to-square"></i>
+		<p>Mode édition</p>
+		<div>publier les changements</div>
+	</div>
 	<header>
 		<h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
 		<nav>
@@ -29,8 +35,16 @@
 		<section id="introduction">
 			<figure>
 				<img src="./assets/images/sophie-bluel.png" alt="">
+				<div id="edit-picture">
+					<i class="fa-regular fa-pen-to-square"></i>
+					<p>modifier</p>
+				</div>
 			</figure>
 			<article>
+				<div id="edit-text">
+					<i class="fa-regular fa-pen-to-square"></i>
+					<p>modifier</p>
+				</div>
 				<h2>Designer d'espace</h2>
 				<p>Je raconte votre histoire, je valorise vos idées. Je vous accompagne de la conception à la livraison
 					finale du chantier.</p>
@@ -42,7 +56,32 @@
 			</article>
 		</section>
 		<section id="portfolio">
-			<h2>Mes Projets</h2>
+			<div id="my-works">
+				<h2>Mes Projets</h2>
+				<div id="edit-works">
+					<i class="fa-regular fa-pen-to-square"></i>
+					<a href="#modal1" class="js-modal">Modifier</a>
+				</div>
+				<aside id="modal1" class="modal" aria-hidden="true" role="dialog" aria-labelledby="title-modal"
+					style="display:none">
+					<div class="modal-wrapper js-stop-modal">
+						<div id="close-modal-icon">
+							<i class="fa-solid fa-xmark"></i>
+						</div>
+						<div id="edit-gallery">
+							<div id="gallery-title">
+								<h3 id="title-modal">Galerie photo</h3>
+							</div>
+							<div class="gallery-editor">
+								<i class="fa-solid fa-arrows-up-down-left-right"></i>
+							</div>
+							<hr width="90%">
+							<input id="btn-add-picture" type="submit" value="Ajouter une photo">
+							<input id="btn-delete-gallery" type="submit" value="Supprimer la galerie">
+						</div>
+					</div>
+				</aside>
+			</div>
 			<div id="filters">
 				<button id="btn-all" type="button">Tous</button>
 			</div>
@@ -73,6 +112,7 @@
 		</nav>
 	</footer>
 	<script src="./works.js"></script>
+	<script src="./modale.js"></script>
 </body>
 
 </html>

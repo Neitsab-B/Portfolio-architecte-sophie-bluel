@@ -251,6 +251,184 @@ button:focus {
 #login form a {
 	display: flex;
 	justify-content: center;
-	margin-bottom: 255px;
+	margin-bottom: 220px;
 	color: black;
+}
+
+/* admin mod */
+
+#edit-top {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: sticky;
+	top: 0px;
+	width: 100% ;
+	height: 50px;
+	background-color: black;
+	gap: 15px;
+}
+
+#edit-top i {
+	color:white;
+	font-size: 20px;
+}
+
+#edit-top p {
+	color:white;
+}
+
+#edit-top div {
+	font-weight: bold;
+	cursor: pointer;
+	background-color: white;
+	border-radius: 25px;
+	padding: 10px 25px
+}
+
+#edit-picture {
+	display: flex;
+	gap: 10px;
+	padding-top: 15px;
+	padding-left: 55px;
+}
+
+#edit-picture i {
+	font-size: 20px;
+}
+
+#edit-picture p {
+	margin-top: 3px;
+}
+
+#edit-text {
+	display: flex;
+	gap: 10px;
+}
+
+#edit-text i {
+	font-size: 20px;
+}
+
+#edit-text p {
+	margin-top: 3px;
+	padding-bottom: 20px
+}
+
+#my-works {
+	display: flex;
+	justify-content: center;
+	height: 30px;
+	gap: 30px;
+	padding-bottom: 20px;
+}
+
+#edit-works {
+	display: flex;
+	padding-top: 7px;
+	gap: 10px;
+	
+}
+
+#edit-works i {
+	font-size: 20px;
+}
+
+#edit-works p {
+	margin-top: 3px;
+}
+
+/* modale */
+
+.modal {
+	position: fixed;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	top:0;
+	left:0;
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, 0.3) ;
+}
+
+.modal-wrapper {
+	display: block;
+	justify-content: center;
+	width: 500px;
+	height: 630px;
+	padding: 20px;
+	background-color: white;
+	border-radius: 15px;	
+}
+
+#edit-gallery {
+	display: flex;
+	flex-direction: column;
+	margin: 0px 40px 0px 40px;
+}
+
+#close-modal-icon {
+	width: 100%;
+	display: flex;
+	justify-content: flex-end;
+}
+
+.fa-xmark {
+	cursor: pointer;
+	font-size: 20px;
+}
+
+#gallery-title {
+	display: flex;
+	justify-content: center;
+	font-size: 25px;
+	font-weight: 500;
+	padding-bottom: 30px;
+}
+
+.gallery-editor {
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
+	gap: 5px;
+}
+
+#btn-add-picture {
+	border: 0;
+	width: 260px;
+	height: 36px;
+	cursor: pointer;
+	margin-bottom:0;
+}
+
+#btn-delete-gallery {
+	border: 0;
+	color:#D65353;
+	background-color: initial;
+	cursor: pointer;
+}
+
+.fa-trash-can {
+	font-size: 12px;
+	position: relative;
+	top: -110px;
+	left: 55px;
+	padding: 2px;
+	background-color: black;
+	color:white;
+	border-radius: 4px;
+	cursor: pointer;
+}
+
+.fa-arrows-up-down-left-right {
+	width: 14px;
+	font-size: 14px;
+	position: relative;
+	top: 21px;
+	left: 55px;
+	background-color: black;
+	color:white;
+	border-radius: 2px;
+	cursor: pointer;
 }
