@@ -327,7 +327,7 @@ button:focus {
 	display: flex;
 	padding-top: 7px;
 	gap: 10px;
-	
+	cursor: pointer;
 }
 
 #edit-works i {
@@ -338,28 +338,75 @@ button:focus {
 	margin-top: 3px;
 }
 
-/* modale */
+/* modale 1 */
 
-.modal {
+.edit-modal-container {
+	display: none;
 	position: fixed;
-	display: flex;
-	justify-content: center;
-	align-items: center;
 	top:0;
-	left:0;
-	width: 100%;
-	height: 100%;
-	background: rgba(0, 0, 0, 0.3) ;
+	width: 100vw;
+	height: 100vh;	
 }
 
-.modal-wrapper {
-	display: block;
+.edit-modal-overlay {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	background-color: #333333d3
+}
+
+.edit-modal {
+	position: absolute;
 	justify-content: center;
-	width: 500px;
-	height: 630px;
+	width: 85%;
+	max-width: 500px;
+	min-width: 300px;
 	padding: 20px;
 	background-color: white;
-	border-radius: 15px;	
+	border-radius: 15px;
+	top: 40%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+.edit-modal-container.active {
+	display: block;
+}
+
+
+/*modale 2*/
+
+.add-modal-container {
+	display: none;
+	position: fixed;
+	top:0;
+	width: 100vw;
+	height: 100vh;
+}
+
+.add-modal-overlay {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	background-color: #333333d3
+}
+
+.add-modal {
+	position: absolute;
+	justify-content: center;
+	width: 85%;
+	max-width: 500px;
+	min-width: 300px;
+	padding: 20px;
+	background-color: white;
+	border-radius: 15px;
+	top: 40%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+.add-modal-container.active {
+	display: block;
 }
 
 #edit-gallery {
@@ -368,7 +415,7 @@ button:focus {
 	margin: 0px 40px 0px 40px;
 }
 
-#close-modal-icon {
+#close-icon-container {
 	width: 100%;
 	display: flex;
 	justify-content: flex-end;
@@ -392,6 +439,10 @@ button:focus {
 	justify-content: center;
 	flex-wrap: wrap;
 	gap: 5px;
+}
+
+#edit-gallery a {
+	display: flex;	
 }
 
 #btn-add-picture {
@@ -424,11 +475,136 @@ button:focus {
 .fa-arrows-up-down-left-right {
 	width: 14px;
 	font-size: 14px;
-	position: relative;
-	top: 21px;
-	left: 55px;
+	position:relative;
+	top: 20.5px;
+	left: 40px;
 	background-color: black;
 	color:white;
 	border-radius: 2px;
 	cursor: pointer;
+}
+
+/* modale 2 */
+
+#modal2-icons-top {
+	display: flex;
+	justify-content: space-between;
+}
+
+.fa-arrow-left {
+	font-size: larger;
+	cursor: pointer;
+}
+
+#modale2-title-container {
+	padding-top: 20px;
+	display: flex;
+	justify-content: center;
+}
+
+#modale2-title-container h3 {
+	font-size: 26px;
+	padding-bottom: 40px;
+}
+
+#add-picture-container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	background-color: #E8F1F6;
+	border-radius: 5px;
+	margin-bottom: 55px;
+}
+
+.fa-image {
+	margin-top: 25px;
+	margin-bottom: 10px;
+	font-size: 70px;
+	filter: opacity(0.2);
+}
+
+#add-picture-btn {
+	background-color:#CBD6DC;
+	color:#306685;
+	font-weight: 600;
+	border-radius: 25px;
+	padding: 10px 35px;
+}
+
+#add-picture-elements {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+label[for="image-input"] {
+	color:#306685;
+	background-color: #CBD6DC;
+	font-weight: 700;
+	padding: 15px 45px 15px 45px;
+	margin-bottom: 5px;
+	border-radius: 25px;
+	cursor: pointer;
+}
+
+#max-mo-label {
+	font-size: 14px;
+	margin-top: 10px;
+	margin-bottom: 20px;
+}
+
+#selected_image {
+	display: flex;
+	justify-content: center;
+	width: 420px;
+	height: 170px;
+}
+
+#image-preview img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+#add-works-input-container {
+	display: flex;
+	justify-content: center;
+}
+
+
+#input-work-title {
+	width: 400px;
+	height: 50px;
+	padding: 0;
+	margin-bottom: 20px;
+	margin-top: 10px;
+	border: none;
+	box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;
+	font-size: 16px;
+}
+
+select {
+	width: 400px;
+	height: 50px;
+	padding: 0;
+	font-family: 'Work Sans';
+	margin-bottom: 20px;
+	margin-top: 10px;
+	border: none;
+	box-shadow: rgba(0, 0, 0, 0.25) 0px 2px 8px;
+	font-size: 16px;
+}
+
+
+#validation-add-button {
+	background-color:#A7A7A7;
+	border: 0;
+	padding: 10px 35px;
+	cursor: pointer;	
+}
+
+#validation-button-container {
+	display: flex;
+	justify-content: center;
 }

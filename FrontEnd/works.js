@@ -1,6 +1,7 @@
 const filtersContainer = document.querySelector("#filters");
 const divGallery = document.querySelector(".gallery");
 const btnAll = document.querySelector("#btn-all");
+const selectCategory = document.querySelector("select");
 
 // fonction pour appeller l'API des projets
 async function getDataWorks() {
@@ -56,13 +57,22 @@ async function getCategories() {
   }
 }
 
-// appel de l'API catégories pour créer les bouttons
+// appel de l'API catégories pour créer les bouttons et les options
 getCategories().then((dataCategories) => {
   dataCategories.forEach((categories) => {
+    // création des boutons
     const categoriesButtons = document.createElement("button");
     categoriesButtons.textContent = categories.name;
     categoriesButtons.name = categories.name;
 
+    // création des options du select de la modale 2
+    const categoriesOptions = document.createElement("option");
+    categoriesOptions.innerText = categories.name;
+    categoriesOptions.setAttribute("id", `${categories.id}`)
+    categoriesOptions.value = categoriesOptions.id
+
+    // attribution aux parents
+    selectCategory.appendChild(categoriesOptions);
     filtersContainer.appendChild(categoriesButtons);
 
     // filtres clickables selon l'id de la catégorie

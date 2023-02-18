@@ -1,68 +1,57 @@
-// modale
+// MODALE.JS
 
-let modal = null;
-const focusableSelector = "button, a, input";
-let focusables = [];
+//-------------------------------------------------------------------------------------------
 
-const openModal = function (e) {
-  e.preventDefault();
-  modal = document.querySelector(e.target.getAttribute("href"));
-  focusables = Array.from(modal.querySelectorAll(focusableSelector));
-  modal.style.display = null;
-  modal.removeAttribute("aria-hidden");
-  modal.setAttribute("aria-modal", "true");
-  modal.addEventListener("click", closeModal);
-  modal
-    .querySelector("#close-modal-icon")
-    .addEventListener("click", closeModal);
-  modal
-    .querySelector(".js-stop-modal")
-    .addEventListener("click", stopPropagation);
-};
+// gestion de l'apparition/disparition des modales
 
-const closeModal = function (e) {
-  if (modal === null) return;
-  e.preventDefault();
-  modal.style.display = "none";
-  modal.setAttribute("aria-hidden", "true");
-  modal.removeAttribute("aria-modal");
-  modal.removeEventListener("click", closeModal);
-  modal
-    .querySelector("#close-modal-icon")
-    .removeEventListener("click", closeModal);
-  modal
-    .querySelector(".js-stop-modal")
-    .removeEventListener("click", stopPropagation);
-  modal = null;
-};
+// CONSTANTES
 
-const stopPropagation = function (e) {
-  e.stopPropagation();
-};
+const editModalTriggers = document.querySelectorAll(".open-return-edit-modal");
+const triggerAddModal = document.querySelector(".open-add-modal");
+const editModalContainer = document.querySelector(".edit-modal-container");
+const addModalContainer = document.querySelector(".add-modal-container");
+const triggerCloseModals = document.querySelectorAll(".close-modals");
 
-const focusInModal = function (e) {
-  e.preventDefault();
-  let index = focusables.findIndex((f) => f === modal.querySelector(":focus"));
-  index++;
-  if (index >= focusables.length) {
-    index = 0;
-  }
-  focusables[index].focus();
-};
+// EVENTS LISTENERS
+// eventlisteners pour chaque bouton + les overlays des modales pour la fermeture
 
-document.querySelector(".js-modal").addEventListener("click", openModal);
+editModalTriggers.forEach((triggers) =>
+  triggers.addEventListener("click", openOrBackToEditModal)
+);
+
+triggerAddModal.addEventListener("click", openAddModal);
+
+triggerCloseModals.forEach((triggers) =>
+  triggers.addEventListener("click", closeModals)
+);
+
+// event pour fermer la modale en appuyant sur Echap
 
 window.addEventListener("keydown", function (e) {
-  // event pour fermer la modale en appuyant sur Echap
   if (e.key === "Escape" || e.key === "Esc") {
-    closeModal(e);
-  }
-  if (e.key === "Tab" && modal !== null) {
-    focusInModal(e);
+    closeModals(e);
   }
 });
 
-//---------------------------------------------------------------
+// FONCTIONS
+
+function openOrBackToEditModal() {
+  addModalContainer.style.display = "none";
+  editModalContainer.style.display = "block";
+  createWorksModal();
+}
+
+function openAddModal() {
+  editModalContainer.style.display = "none";
+  addModalContainer.style.display = "block";
+}
+
+function closeModals() {
+  addModalContainer.style.display = "none";
+  editModalContainer.style.display = "none";
+}
+
+//-------------------------------------------------------------------------------------------
 
 const galleryEditor = document.querySelector(".gallery-editor");
 
@@ -78,7 +67,7 @@ async function getDataWorksModal() {
   }
 }
 
-// fonction pour créer tous les projets
+// fonction pour créer tous les projets et leurs icones de suppression fonctionnels
 function createWorksModal() {
   getDataWorksModal().then((dataWorks) => {
     document.querySelector(".gallery-editor").innerHTML = "";
@@ -111,20 +100,87 @@ function createWorksModal() {
 
       // écouteur pour supprimer les projets en fonction de leur ID
       trashCanIcon.addEventListener("click", function () {
-        let x = trashCanIcon.id
-          fetch(`http://localhost:5678/api/works/${x}`, {
-            method: "DELETE",
-            headers: {
-              Authorization: `Bearer ${sessionStorage["adminToken"]}`,
-              "Content-Type": "application/json",
-            }
-          })
+        let x = trashCanIcon.id;
+        fetch(`http://localhost:5678/api/works/${x}`, {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${sessionStorage["adminToken"]}`,
+            "Content-Type": "application/json",
+          },
+        });
       });
     });
   });
 }
 
-// création des projets au chargement de la modale
-createWorksModal();
+//-------------------------------------------------------------------------------------------
 
-// --------------------------------------------------------------
+// aperçu de l'image selectionnée par l'utilisateur
+
+const addPicturesElements = document.querySelector("#add-picture-elements");
+const imageInput = document.querySelector("#image-input");
+
+imageInput.addEventListener("change", imgPreview);
+
+function imgPreview() {
+  const fileExtension = /\.(jpg|png)$/i;
+  //le $ signifie que le mot doit se trouver à la fin, le /i signifie case insensitive donc insensible aux majuscules/min. c'est une ReGex
+
+  // test si le fichier.lenght = 0 ou si l'extension ne contient pas le fileExtension. Le .test renvoit un false si ça ne correspond pas.
+  if (this.files.length === 0 || !fileExtension.test(this.files[0].name)) {
+    return;
+  }
+
+  // disparition des éléments pour correspondre à la maquette
+  addPicturesElements.style.display = "none";
+
+  const file = this.files[0];
+  const file_reader = new FileReader();
+  file_reader.readAsArrayBuffer(file);
+  file_reader.addEventListener("load", (e) => displayImage(e, file));
+}
+
+function displayImage(e, file) {
+  const figure_element = document.createElement("figure");
+  figure_element.id = "selected_image";
+
+  const image = document.createElement("img");
+  const image_blob = new Blob([e.target.result], { type: file.type });
+  image.src = URL.createObjectURL(image_blob);
+
+  figure_element.appendChild(image);
+  document.querySelector("#image-preview").appendChild(figure_element);
+}
+
+//-----------------------------------------------------------------------------------------------------------------------
+
+// add work
+
+const validation = document.querySelector("#validation-add-button");
+
+validation.addEventListener("click", function () {
+  const newWorkTitle = document.getElementById("input-work-title").value;
+  const newWorkCategory = document.querySelector("select").value;
+  const categoryInt = parseInt(newWorkCategory);
+  const newWorkImage = document.querySelector("#image-input").files[0];
+
+  const formData = new FormData();
+
+  formData.append("image", newWorkImage, newWorkImage.name);
+  formData.append("title", newWorkTitle);
+  formData.append("category", categoryInt);
+
+  fetch("http://localhost:5678/api/works", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${sessionStorage["adminToken"]}`,
+    },
+    body: formData,
+  }).then(function (r) {
+    if (r.ok) {
+      console.log("projet envoyé avec succès !");
+    } else {
+      console.log(r);
+    }
+  });
+});
