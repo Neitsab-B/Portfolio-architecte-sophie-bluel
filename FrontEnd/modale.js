@@ -1,6 +1,6 @@
 // MODALE.JS
 
-//-------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------------------------
 
 // gestion de l'apparition/disparition des modales
 
@@ -51,7 +51,9 @@ function closeModals() {
   editModalContainer.style.display = "none";
 }
 
-//-------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------------
+
+// Appel de l'API et création des icones de suppression
 
 const galleryEditor = document.querySelector(".gallery-editor");
 
@@ -98,7 +100,7 @@ function createWorksModal() {
       // attribution des id des poubelles en fonction de l'id du projet
       trashCanIcon.id = work.id;
 
-      // écouteur pour supprimer les projets en fonction de leur ID
+      // écouteur pour supprimer les projets en fonction de leur ID en cliquant sur la poubelle
       trashCanIcon.addEventListener("click", function () {
         let x = trashCanIcon.id;
         fetch(`http://localhost:5678/api/works/${x}`, {
@@ -113,18 +115,25 @@ function createWorksModal() {
   });
 }
 
-//-------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------------
 
 // aperçu de l'image selectionnée par l'utilisateur
+
+// CONSTANTES
 
 const addPicturesElements = document.querySelector("#add-picture-elements");
 const imageInput = document.querySelector("#image-input");
 
+// EVENTS LISTENERS
+
 imageInput.addEventListener("change", imgPreview);
 
+// FONCTIONS
+
 function imgPreview() {
+  //ReGex
   const fileExtension = /\.(jpg|png)$/i;
-  //le $ signifie que le mot doit se trouver à la fin, le /i signifie case insensitive donc insensible aux majuscules/min. c'est une ReGex
+  //le $ signifie que le mot doit se trouver à la fin, le /i signifie case insensitive donc insensible aux majuscules/min.
 
   // test si le fichier.lenght = 0 ou si l'extension ne contient pas le fileExtension. Le .test renvoit un false si ça ne correspond pas.
   if (this.files.length === 0 || !fileExtension.test(this.files[0].name)) {
@@ -154,33 +163,37 @@ function displayImage(e, file) {
 
 //-----------------------------------------------------------------------------------------------------------------------
 
-// add work
+// fonction pour ajouter des projets sur la modale 2
 
 const validation = document.querySelector("#validation-add-button");
 
-validation.addEventListener("click", function () {
+validation.addEventListener("click", function (e) {
+  e.preventDefault()
   const newWorkTitle = document.getElementById("input-work-title").value;
   const newWorkCategory = document.querySelector("select").value;
   const categoryInt = parseInt(newWorkCategory);
   const newWorkImage = document.querySelector("#image-input").files[0];
-
   const formData = new FormData();
 
-  formData.append("image", newWorkImage, newWorkImage.name);
-  formData.append("title", newWorkTitle);
-  formData.append("category", categoryInt);
+  if (!newWorkImage) {
+    alert("Veuillez sélectionner une image");
+  } else {
+    formData.append("image", newWorkImage, newWorkImage.name);
+    formData.append("title", newWorkTitle);
+    formData.append("category", categoryInt);
 
-  fetch("http://localhost:5678/api/works", {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${sessionStorage["adminToken"]}`,
-    },
-    body: formData,
-  }).then(function (r) {
-    if (r.ok) {
-      console.log("projet envoyé avec succès !");
-    } else {
-      console.log(r);
-    }
-  });
+    fetch("http://localhost:5678/api/works", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${sessionStorage["adminToken"]}`,
+      },
+      body: formData,
+    }).then(function (r) {
+      if (r.ok) {
+        console.log("projet envoyé avec succès !");
+      } else {
+        console.log(r);
+      }
+    });
+  }
 });

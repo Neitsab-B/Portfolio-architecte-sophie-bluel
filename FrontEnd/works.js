@@ -1,7 +1,11 @@
+// WORKS.JS
+
+//-------------------------------------------------------------------------------------------------------------------
+
+// CREATION DES PROJETS SUR L'INDEX
+
 const filtersContainer = document.querySelector("#filters");
 const divGallery = document.querySelector(".gallery");
-const btnAll = document.querySelector("#btn-all");
-const selectCategory = document.querySelector("select");
 
 // fonction pour appeller l'API des projets
 async function getDataWorks() {
@@ -15,7 +19,7 @@ async function getDataWorks() {
   }
 }
 
-// fonction pour créer tous les projets
+// fonction pour créer tous les projets sur l'index
 function createWorks() {
   getDataWorks().then((dataWorks) => {
     document.querySelector(".gallery").innerHTML = "";
@@ -42,8 +46,15 @@ function createWorks() {
   });
 }
 
-// création des projets au loading de la page
+// création des projets au loading de la page index
 createWorks();
+
+//----------------------------------------------------------------------------------------------------------------------
+
+// CREATION DES FILTRES SUR L'INDEX
+
+const btnAll = document.querySelector("#btn-all");
+const selectCategory = document.querySelector("select");
 
 // fonction pour appeller l'API des catégories
 async function getCategories() {
@@ -68,9 +79,8 @@ getCategories().then((dataCategories) => {
     // création des options du select de la modale 2
     const categoriesOptions = document.createElement("option");
     categoriesOptions.innerText = categories.name;
-    categoriesOptions.setAttribute("id", `${categories.id}`)
-    categoriesOptions.value = categoriesOptions.id
-
+    categoriesOptions.setAttribute("id", `${categories.id}`);
+    categoriesOptions.value = categoriesOptions.id;
     // attribution aux parents
     selectCategory.appendChild(categoriesOptions);
     filtersContainer.appendChild(categoriesButtons);
@@ -161,7 +171,7 @@ getCategories().then((dataCategories) => {
   });
 });
 
-// filtre "tous"
+// création du filtre "tous"
 
 btnAll.addEventListener("click", function () {
   createWorks();
