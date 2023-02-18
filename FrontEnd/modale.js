@@ -11,6 +11,7 @@ const triggerAddModal = document.querySelector(".open-add-modal");
 const editModalContainer = document.querySelector(".edit-modal-container");
 const addModalContainer = document.querySelector(".add-modal-container");
 const triggerCloseModals = document.querySelectorAll(".close-modals");
+const indexTabs = document.querySelectorAll(".index-tabs");
 
 // EVENTS LISTENERS
 // eventlisteners pour chaque bouton + les overlays des modales pour la fermeture
@@ -38,6 +39,12 @@ window.addEventListener("keydown", function (e) {
 function openOrBackToEditModal() {
   addModalContainer.style.display = "none";
   editModalContainer.style.display = "block";
+
+  // for each pour enlever les problèmes de tabulation sur l'index lorsque les modales sont ouvertes
+  indexTabs.forEach(function (tab) {
+    tab.tabIndex = "-1";
+  });
+
   createWorksModal();
 }
 
@@ -49,6 +56,11 @@ function openAddModal() {
 function closeModals() {
   addModalContainer.style.display = "none";
   editModalContainer.style.display = "none";
+
+  // rétablissement de la tabulation sur l'index aux fermetures des modales
+  indexTabs.forEach(function (tab) {
+    tab.tabIndex = "0";
+  });
 }
 
 //------------------------------------------------------------------------------------------------------------------
@@ -168,7 +180,7 @@ function displayImage(e, file) {
 const validation = document.querySelector("#validation-add-button");
 
 validation.addEventListener("click", function (e) {
-  e.preventDefault()
+  e.preventDefault();
   const newWorkTitle = document.getElementById("input-work-title").value;
   const newWorkCategory = document.querySelector("select").value;
   const categoryInt = parseInt(newWorkCategory);
